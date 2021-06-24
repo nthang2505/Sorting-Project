@@ -108,6 +108,87 @@ void heap_sort(T* a, int n)
 }
 
 template <class T>
+void insertionSort(T* a, int n, int compare)
+{
+	compare = 0;
+	int i, j;
+	T key;
+	for (i = 1; ++compare && i < n; i++)
+	{
+		key = a[i];
+		j = i - 1;
+
+		while (++compare && j >= 0 && a[j] > key && ++compare)
+		{
+			a[j + 1] = a[j];
+			j = j - 1;
+		}
+		a[j + 1] = key;
+	}
+}
+
+template <class T>
+void shellSort(T* a, int n, int compare)
+{
+	compare = 0;
+	int i, j, k;
+	T temp;
+
+	for (i = n / 2; ++compare && i > 0; i = i / 2)
+	{
+		for (j = i; j < n && ++compare; j++)
+		{
+			for (k = j - i; k >= 0 && ++compare; k = k - i)
+			{
+				if (a[k + i] >= a[k] && ++compare)
+					break;
+				else
+				{
+					temp = a[k];
+					a[k] = a[k + i];
+					a[k + i] = temp;
+				}
+			}
+		}
+	}
+}
+
+template <class T>
+void Heapify(T* a, int n, int i,int compare)
+{
+	compare = 0;
+	int largest = i;
+	int l = 2 * i + 1;
+	int r = 2 * i + 2;
+
+	if (l < n && a[l] > a[largest]&&++compare&&++compare)
+		largest = l;
+
+	if (r < n && a[r] > a[largest]&&++compare)
+		largest = r;
+
+	if (largest != i&& ++compare)
+	{
+		swap(a[i], a[largest]);
+		Heapify(a, n, largest,compare);
+	}
+}
+
+template <class T>
+void heapSort(T* a, int n,int compare)
+{
+	compare = 0;
+	for (int i = n / 2 - 1; i >= 0&&++compare; i--)
+		Heapify(a, n, i,compare);
+
+	for (int i = n - 1; i > 0&&++compare; i--)
+	{
+		swap(a[0], a[i]);
+		Heapify(a, i, 0,compare);
+	}
+}
+
+template <class T>
 double Time_Insertion_sort(T* a, int  n)
 {
 	double cpu_time_used;
@@ -157,23 +238,26 @@ int main() {
 	cout << "2.Time Shell Sort \n";
 	cout << "1.Time Heap Sort \n";
 	cout << "What your chosen: \n";
-	int chose;
+	int chose, compare = 0;
 	cin >> chose;
 		//system("cls");
 		if (chose == 1) {
-			insertion_sort(a, n);
+			insertionSort(a, n,compare);
+			cout << "compare: " << compare << endl;
 			Output_random(a, n);
 			cout << endl;
 			system("pause");
 		}
 		else if (chose == 2) {
-			shell_sort(a, n);
+			shellSort(a, n,compare);
+			cout << "compare: " << compare << endl;
 			Output_random(a, n);
 			cout << endl;
 			system("pause");
 		}
 		else if (chose == 3) {
-			heap_sort(a, n);
+			heapSort(a, n,compare);
+			cout << "compare: " << compare << endl;
 			Output_random(a, n);
 			cout << endl;
 			system("pause");
