@@ -108,7 +108,7 @@ void heap_sort(T* a, int n)
 }
 
 template <class T>
-void insertionSort(T* a, int n, int compare)
+void insertionSort(T* a, int n, int &compare)
 {
 	compare = 0;
 	int i, j;
@@ -128,7 +128,7 @@ void insertionSort(T* a, int n, int compare)
 }
 
 template <class T>
-void shellSort(T* a, int n, int compare)
+void shellSort(T* a, int n, int &compare)
 {
 	compare = 0;
 	int i, j, k;
@@ -154,7 +154,7 @@ void shellSort(T* a, int n, int compare)
 }
 
 template <class T>
-void Heapify(T* a, int n, int i,int compare)
+void Heapify(T* a, int n, int i,int &compare)
 {
 	compare = 0;
 	int largest = i;
@@ -175,7 +175,7 @@ void Heapify(T* a, int n, int i,int compare)
 }
 
 template <class T>
-void heapSort(T* a, int n,int compare)
+void heapSort(T* a, int n,int &compare)
 {
 	compare = 0;
 	for (int i = n / 2 - 1; i >= 0&&++compare; i--)
