@@ -31,10 +31,10 @@ int main(int argc, char* argv[])
             if (So(array[3]))
             {
                 cout << "ALGORITHM MODE" << endl;
-                cout << "Algorithm: " << array[2];
-                cout << "Input file: " << array[3];
+                cout << "Algorithm: " << array[2] << endl;
+                cout << "Input file: " << array[3] << endl;
 
-                ifstream file(array[3]);
+                ifstream file;
                 file.open(array[3]);
                 int n;
                 file >> n;
@@ -192,7 +192,7 @@ int main(int argc, char* argv[])
             cout << "COMPARE MODE" << endl;
             cout << "Algorithm: " << array[2] << " | " << array[3] << endl;
             cout << "Input file: " << array[4] << endl;
-            ifstream file(array[4]);
+            ifstream file;
             file.open(array[4]);
             int n;
             file >> n;
