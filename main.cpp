@@ -20,7 +20,8 @@ int main(int argc, char* argv[])
     vector<string> array;
     for (int i = 0; i < argc; i++)
     {
-        array.push_back(argv[i]);
+        string s(argv[i]);
+        array.push_back(s);
     }
 
     if (array[1] == "-a")
@@ -28,13 +29,13 @@ int main(int argc, char* argv[])
         if (argc == 5)
         {
             //commandline 1
-            if (So(array[3]))
+            if (!So(array[3]))
             {
                 cout << "ALGORITHM MODE" << endl;
-                cout << "Algorithm: " << array[2];
-                cout << "Input file: " << array[3];
+                cout << "Algorithm: " << array[2] << endl;
+                cout << "Input file: " << array[3] << endl;
 
-                ifstream file(array[3]);
+                ifstream file;
                 file.open(array[3]);
                 int n;
                 file >> n;
@@ -56,7 +57,7 @@ int main(int argc, char* argv[])
                 }
                 else if (array[4] == "-comp")
                 {
-                    double compare = 0;
+                    long long compare = 0;
                     compare_sort(a2, n, compare, array[2]);
                     cout << "Comparisions (if required): " << compare << endl;
                     delete [] a1;
@@ -66,7 +67,7 @@ int main(int argc, char* argv[])
                 {
                     double time = time_sort(a1, n, array[2]);
                     cout << "Running time (if required): " << time << endl;
-                    double compare = 0;
+                    long long compare = 0;
                     compare_sort(a2, n, compare, array[2]);
                     cout << "Comparisions (if required): " << compare << endl;
                     delete [] a1;
@@ -77,8 +78,8 @@ int main(int argc, char* argv[])
             else
             {
                 cout << "ALGORITHM MODE" << endl;
-                cout << "Algorithm: " << array[2];
-                cout << "Input size: " << array[3];
+                cout << "Algorithm: " << array[2] << endl;
+                cout << "Input size: " << array[3] << endl;
 
                 string a[4] = {"Randomize", "Nerly Sorted", "Sorted", "Reversed"};
                 int i = 0;
@@ -103,7 +104,7 @@ int main(int argc, char* argv[])
                     }
                     else if (array[5] == "-comp")
                     {
-                        double compare = 0;
+                        long long compare = 0;
                         compare_sort(a2, n, compare, array[2]);
                         cout << "Comparisions (if required): " << compare << endl;
                         delete [] a1;
@@ -113,7 +114,7 @@ int main(int argc, char* argv[])
                     {
                         double time = time_sort(a1, n, array[2]);
                         cout << "Running time (if required): " << time << endl;
-                        double compare = 0;
+                        long long compare = 0;
                         compare_sort(a2, n, compare, array[2]);
                         cout << "Comparisions (if required): " << compare << endl;
                         delete [] a1;
@@ -129,9 +130,9 @@ int main(int argc, char* argv[])
         else if (argc == 6)
         {
             cout << "ALGORITHM MODE" << endl;
-            cout << "Algorithm: " << array[2];
-            cout << "Input size: " << array[3];
-            cout << "Input oder: " << array[4];
+            cout << "Algorithm: " << array[2] << endl;
+            cout << "Input size: " << array[3] << endl;
+            cout << "Input oder: " << array[4] << endl;
 
             int n = stoi(array[3]);
             int *a1 = new int[n];
@@ -166,7 +167,7 @@ int main(int argc, char* argv[])
             }
             else if (array[5] == "-comp")
             {
-                double compare = 0;
+                long long compare = 0;
                 compare_sort(a2, n, compare, array[2]);
                 cout << "Comparisions (if required): " << compare << endl;
                 delete [] a1;
@@ -176,7 +177,7 @@ int main(int argc, char* argv[])
             {
                 double time = time_sort(a1, n, array[2]);
                 cout << "Running time (if required): " << time << endl;
-                double compare = 0;
+                long long compare = 0;
                 compare_sort(a2, n, compare, array[2]);
                 cout << "Comparisions (if required): " << compare << endl;
                 delete [] a1;
@@ -192,7 +193,7 @@ int main(int argc, char* argv[])
             cout << "COMPARE MODE" << endl;
             cout << "Algorithm: " << array[2] << " | " << array[3] << endl;
             cout << "Input file: " << array[4] << endl;
-            ifstream file(array[4]);
+            ifstream file;
             file.open(array[4]);
             int n;
             file >> n;
@@ -211,7 +212,7 @@ int main(int argc, char* argv[])
             }
             double time1 = time_sort(a1, n, array[2]);
             double time2 = time_sort(a2, n, array[3]);
-            double compare1 = 0, compare2 = 0;
+            long long compare1 = 0, compare2 = 0;
             compare_sort(a3, n, compare1, array[2]);
             compare_sort(a4, n, compare1, array[3]);
             cout << "Running time: " << time1 << " | " << time2 << endl;
@@ -266,7 +267,7 @@ int main(int argc, char* argv[])
 
             double time1 = time_sort(a1, n, array[2]);
             double time2 = time_sort(a2, n, array[3]);
-            double compare1 = 0, compare2 = 0;
+            long long compare1 = 0, compare2 = 0;
             compare_sort(a3, n, compare1, array[2]);
             compare_sort(a4, n, compare1, array[3]);
             cout << "Running time: " << time1 << " | " << time2 << endl;
