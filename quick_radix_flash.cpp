@@ -3,18 +3,18 @@ void quick_sort(int *a, int l, int r)
 {
     if (l >= r)
         return;
-    int i = l, j = r;
+    int i = l, j = r, temp;
     while (i <= j)
     {
         while (a[i] < a[l])
             i++;
-        while (a[j] > a[l])
+        while (a[j] > a[l]) 
             j--;
-        int temp = a[i];
-        a[i] = a[j];
-        a[j] = temp;
-        if (i == j)
+        if (i <= j)
         {
+            temp = a[i];
+            a[i] = a[j];
+            a[j] = temp;
             i++;
             j--;
         }
@@ -119,18 +119,18 @@ void quick_sort(int *a, int l, int r, int &count_compare)
     count_compare++;
     if (l >= r)
         return;
-    int i = l, j = r;
+    int i = l, j = r, temp;
     while (count_compare++ && i <= j)
     {
         while (count_compare++ && a[i] < a[l])
             i++;
         while (count_compare++ && a[j] > a[l])
             j--;
-        int temp = a[i];
-        a[i] = a[j];
-        a[j] = temp;
         if (count_compare++ && i == j)
         {
+        temp = a[i];
+        a[i] = a[j];
+        a[j] = temp;
             i++;
             j--;
         }
