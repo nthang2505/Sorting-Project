@@ -3,7 +3,7 @@
 using namespace std;
 
 template <class T>//insertion sort
-void insertion_sort(T* a, int n){
+void insertion_sort(T* a, int n) {
 	int i, j;
 	T key;
 	for (i = 1; i < n; i++)
@@ -21,8 +21,7 @@ void insertion_sort(T* a, int n){
 }
 
 template <class T>//heap sort
-void heapify(T* a, int n, int i)
-{
+void heapify(T* a, int n, int i) {
 	int largest = i;
 	int l = 2 * i + 1;
 	int r = 2 * i + 2;
@@ -119,7 +118,9 @@ void quick_sort(T* a, int l, int r)
             i++;
         while (a[j] > a[l])
             j--;
-        swap(a[i], a[j]);
+        int temp = a[i];
+        a[i] = a[j];
+        a[j] = temp;
         if (i == j)
         {
             i++;
@@ -130,29 +131,42 @@ void quick_sort(T* a, int l, int r)
     quick_sort(a, i, r);
 }
 
-//template <class T>//radix sort
-// void radix_sort(T* a, int n, int exp)
-// {
-//     int count[10], *output;
-//     output = new int[n];
-//     for (int i = 0; i < 10; i++)
-//         count[i] = 0;
-//     for (int i = 0; i < n; i++)
-//         count[(a[i] / exp) % 10]++;
-//     for (int i = 1; i < 10; i++)
-//         count[i] += count[i - 1];
-//     for (int i = n - 1; i >= 0; i--)
-//     {
-//         output[count[(a[i] / exp) % 10] - 1] = a[i];
-//         count[(a[i] / exp) % 10]--;
-//     }
-//     for (int i = 0; i < n; i++)
-//         a[i] = output[i];
-//     delete[] output;
-// }
+template <class T>//radix sort
+void radix_sort(T* &a, int n)
+{
+    int max = 0, exp = 0;
+    for (int i = 0; i < n; i++)
+        exp = exp > a[i] ? exp : a[i];
+    while (exp > 0)
+    {
+        max++;
+        exp /= 10;
+    }
+    int count[10], *output;
+    output = new int[n];
+    exp = 1;
+    while (max--)
+    {
+        for (int i = 0; i < 10; i++)
+            count[i] = 0;
+        for (int i = 0; i < n; i++)
+            count[(a[i] / exp) % 10]++;
+        for (int i = 1; i < 10; i++)
+            count[i] += count[i - 1];
+        for (int i = n - 1; i >= 0; i--)
+        {
+            output[count[(a[i] / exp) % 10] - 1] = a[i];
+            count[(a[i] / exp) % 10]--;
+        }
+        for (int i = 0; i < n; i++)
+            a[i] = output[i];
+        exp *= 10;
+    }
+    delete[] output;
+}
 
 template <class T>//sharker sort
-void shaker_sort(T* a, int n){
+void shaker_sort(T* a, int n) {
 	int l = 0, r = n-1, k = n-1;
 	while (l < r)
 	{
@@ -179,8 +193,7 @@ void shaker_sort(T* a, int n){
 }
 
 template <class T>//shell sort
-void shell_sort(T* a, int n)
-{
+void shell_sort(T* a, int n) {
 	int i, j, k;
 	T temp;
 
@@ -203,7 +216,7 @@ void shell_sort(T* a, int n)
 	}
 }
 
-template <class T>
+template <class T>//flash sort
 void flash_sort(T* a, int n)
 {
     int minVal = a[0], max = a[0], hold;
@@ -263,9 +276,7 @@ void flash_sort(T* a, int n)
 }
 
 template <class T>
-double time_sort(T* a, int n, string sort)
-{
-	
+double time_sort(T* a, int n, string sort) {
 	// if (sort == "selection-sort"){
 	// 	double cpu_time_used;
 	// 	clock_t start = clock();
@@ -274,7 +285,7 @@ double time_sort(T* a, int n, string sort)
 	// 	cpu_time_used = ((double)(end - start)) / CLOCKS_PER_SEC;
 	// 	return cpu_time_used;
     // }
-    //ok
+    
 	if (sort == "insertion-sort"){
         double cpu_time_used;
 		clock_t start = clock();
@@ -283,6 +294,7 @@ double time_sort(T* a, int n, string sort)
 		cpu_time_used = ((double)(end - start)) / CLOCKS_PER_SEC;
 		return cpu_time_used;
     }
+
     // else if (sort == "buble-sort"){
     //     double cpu_time_used;
 	// 	clock_t start = clock();
@@ -291,7 +303,7 @@ double time_sort(T* a, int n, string sort)
 	// 	cpu_time_used = ((double)(end - start)) / CLOCKS_PER_SEC;
 	// 	return cpu_time_used;
     // }
-    //ok
+    
 	else if (sort == "heap-sort"){
         double cpu_time_used;
 		clock_t start = clock();
@@ -300,7 +312,7 @@ double time_sort(T* a, int n, string sort)
 		cpu_time_used = ((double)(end - start)) / CLOCKS_PER_SEC;
 		return cpu_time_used;
     }
-    //ok
+    
 	else if (sort == "merge-sort"){
         double cpu_time_used;
 		clock_t start = clock();
@@ -309,7 +321,7 @@ double time_sort(T* a, int n, string sort)
 		cpu_time_used = ((double)(end - start)) / CLOCKS_PER_SEC;
 		return cpu_time_used;
     }
-    //ok
+    
 	else if (sort == "quick-sort"){
         double cpu_time_used;
 		clock_t start = clock();
@@ -318,15 +330,16 @@ double time_sort(T* a, int n, string sort)
 		cpu_time_used = ((double)(end - start)) / CLOCKS_PER_SEC;
 		return cpu_time_used;
     }
-    // else if (sort == "radix-sort"){
-    //     double cpu_time_used;
-	// 	clock_t start = clock();
-	// 	radix_sort(a, n);
-	// 	clock_t end = clock();
-	// 	cpu_time_used = ((double)(end - start)) / CLOCKS_PER_SEC;
-	// 	return cpu_time_used;
-    // }
-	//ok
+
+    else if (sort == "radix-sort"){
+        double cpu_time_used;
+		clock_t start = clock();
+		radix_sort(a, n);
+		clock_t end = clock();
+		cpu_time_used = ((double)(end - start)) / CLOCKS_PER_SEC;
+		return cpu_time_used;
+    }
+	
 	else if (sort == "shaker-sort"){
         double cpu_time_used;
 		clock_t start = clock();
@@ -335,7 +348,7 @@ double time_sort(T* a, int n, string sort)
 		cpu_time_used = ((double)(end - start)) / CLOCKS_PER_SEC;
 		return cpu_time_used;
     }
-    //ok
+    
 	else if (sort == "shell-sort"){
         double cpu_time_used;
 		clock_t start = clock();
@@ -344,6 +357,7 @@ double time_sort(T* a, int n, string sort)
 		cpu_time_used = ((double)(end - start)) / CLOCKS_PER_SEC;
 		return cpu_time_used;
     }
+    
     // else if (sort == "counting-sort"){
     //     double cpu_time_used;
 	// 	clock_t start = clock();
