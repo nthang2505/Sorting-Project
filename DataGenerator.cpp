@@ -18,7 +18,6 @@ void HoanVi(T &a, T &b)
 void GenerateRandomData(int a[], int n)
 {
 	srand((unsigned int)time(NULL));
-
 	for (int i = 0; i < n; i++)
 	{
 		a[i] = rand()%n;

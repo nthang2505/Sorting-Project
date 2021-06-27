@@ -51,7 +51,7 @@ int main(int argc, char* argv[])
                 if (array[4] == "-time")
                 {
                     double time = time_sort(a1, n, array[2]);
-                    cout << "Running time (if required): " << time << endl;
+                    cout << "Running time : " << time << endl;
                     delete [] a1;
                     delete [] a2;
                 }
@@ -59,17 +59,17 @@ int main(int argc, char* argv[])
                 {
                     long long compare = 0;
                     compare_sort(a2, n, compare, array[2]);
-                    cout << "Comparisions (if required): " << compare << endl;
+                    cout << "Comparisions : " << compare << endl;
                     delete [] a1;
                     delete [] a2;
                 }
                 else
                 {
                     double time = time_sort(a1, n, array[2]);
-                    cout << "Running time (if required): " << time << endl;
+                    cout << "Running time : " << time << endl;
                     long long compare = 0;
                     compare_sort(a2, n, compare, array[2]);
-                    cout << "Comparisions (if required): " << compare << endl;
+                    cout << "Comparisions : " << compare << endl;
                     delete [] a1;
                     delete [] a2;
                 }
@@ -81,7 +81,7 @@ int main(int argc, char* argv[])
                 cout << "Algorithm: " << array[2] << endl;
                 cout << "Input size: " << array[3] << endl;
 
-                string a[4] = {"Randomize", "Nerly Sorted", "Sorted", "Reversed"};
+                string a[4] = {"Randomize", "Sorted", "Reversed", "Nearly Sorted"};
                 int i = 0;
                 int* a1;
                 int* a2;
@@ -95,28 +95,28 @@ int main(int argc, char* argv[])
                     GenerateData(a1, n, i);
                     GenerateData(a2, n, i);
                     
-                    if (array[5] == "-time")
+                    if (array[4] == "-time")
                     {
                         double time = time_sort(a1, n, array[2]);
-                        cout << "Running time (if required): " << time << endl;
+                        cout << "Running time : " << time << endl;
                         delete [] a1;
                         delete [] a2;
                     }
-                    else if (array[5] == "-comp")
+                    else if (array[4] == "-comp")
                     {
                         long long compare = 0;
                         compare_sort(a2, n, compare, array[2]);
-                        cout << "Comparisions (if required): " << compare << endl;
+                        cout << "Comparisions : " << compare << endl;
                         delete [] a1;
                         delete [] a2;
                     }
                     else
                     {
                         double time = time_sort(a1, n, array[2]);
-                        cout << "Running time (if required): " << time << endl;
+                        cout << "Running time : " << time << endl;
                         long long compare = 0;
                         compare_sort(a2, n, compare, array[2]);
-                        cout << "Comparisions (if required): " << compare << endl;
+                        cout << "Comparisions : " << compare << endl;
                         delete [] a1;
                         delete [] a2;
                     }
@@ -161,7 +161,7 @@ int main(int argc, char* argv[])
             if (array[5] == "-time")
             {
                 double time = time_sort(a1, n, array[2]);
-                cout << "Running time (if required): " << time << endl;
+                cout << "Running time : " << time << endl;
                 delete [] a1;
                 delete [] a2;
             }
@@ -169,17 +169,17 @@ int main(int argc, char* argv[])
             {
                 long long compare = 0;
                 compare_sort(a2, n, compare, array[2]);
-                cout << "Comparisions (if required): " << compare << endl;
+                cout << "Comparisions : " << compare << endl;
                 delete [] a1;
                 delete [] a2;
             }
             else
             {
                 double time = time_sort(a1, n, array[2]);
-                cout << "Running time (if required): " << time << endl;
+                cout << "Running time : " << time << endl;
                 long long compare = 0;
                 compare_sort(a2, n, compare, array[2]);
-                cout << "Comparisions (if required): " << compare << endl;
+                cout << "Comparisions : " << compare << endl;
                 delete [] a1;
                 delete [] a2;
             }
@@ -263,13 +263,13 @@ int main(int argc, char* argv[])
                 GenerateData(a2, n, 3);
                 GenerateData(a3, n, 3);
                 GenerateData(a4, n, 3);
-            }
+            } 
 
             double time1 = time_sort(a1, n, array[2]);
             double time2 = time_sort(a2, n, array[3]);
             long long compare1 = 0, compare2 = 0;
             compare_sort(a3, n, compare1, array[2]);
-            compare_sort(a4, n, compare1, array[3]);
+            compare_sort(a4, n, compare2, array[3]);
             cout << "Running time: " << time1 << " | " << time2 << endl;
             cout << "Comparisions: " << compare1 << " | " << compare2 << endl;
             delete [] a1;

@@ -2,8 +2,30 @@
 #include <time.h>
 using namespace std;
 
+template <class T>
+void selectionSort(T* a, int n)
+{
+	int min;
+	int temp;
+	for (int i = 0; i < n - 1; i++)
+	{
+		min = i;
+		for (int j = i + 1; j < n; j++)
+		{
+			if (a[j] < a[min])
+				min = j;
+		}
+		if (min != i)
+		{
+			temp = a[min];
+			a[min] = a[i];
+			a[i] = temp;
+		}
+	}
+}
+
 template <class T>//insertion sort
-void insertion_sort(T* a, int n) {
+void insertionSort(T* a, int n) {
 	int i, j;
 	T key;
 	for (i = 1; i < n; i++)
@@ -17,6 +39,23 @@ void insertion_sort(T* a, int n) {
 			j = j - 1;
 		}
 		a[j + 1] = key;
+	}
+}
+
+template <class T>
+void bubbleSort(T* a, int n)
+{
+	for (int i = 0; i <= n - 1; i++)
+	{
+		for (int j = n - 1;j > i; j--)
+		{
+			if (a[j] < a[j - 1]) 
+			{
+				int temp = a[j - 1];
+				a[j - 1] = a[j];
+				a[j] = temp;
+			}
+		}
 	}
 }
 
@@ -39,7 +78,7 @@ void heapify(T* a, int n, int i) {
 	}
 }
 template <class T>
-void heap_sort(T* a, int n)
+void heapSort(T* a, int n)
 {
 	for (int i = n / 2 - 1; i >= 0; i--)
 		heapify(a, n, i);
@@ -96,43 +135,46 @@ void merge(T* a, int l, int m, int r) {
 
 }
 template <class T>
-void merge_sort(T* a, int l, int r) {
+void mergeSort(T* a, int l, int r) {
     if (l < r)
     {
         int m = (l + r) / 2;
-        merge_sort(a, l, m);
-        merge_sort(a, m + 1, r);
+        mergeSort(a, l, m);
+        mergeSort(a, m + 1, r);
         merge(a, l, m, r);
     }
 }
 
 template <class T>//quick sort
-void quick_sort(T* a, int l, int r)
+int partition (T* a, int low, int high)
 {
-    if (l >= r)
-        return;
-    int i = l, j = r;
-    while (i <= j)
+    int pivot = a[(high - low) / 2];
+    int i = low;
+ 
+    for (int j = low; j <= high- 1; j++)
     {
-        while (a[i] < a[l])
-            i++;
-        while (a[j] > a[l])
-            j--;
-        int temp = a[i];
-        a[i] = a[j];
-        a[j] = temp;
-        if (i == j)
+        if (a[j] <= pivot)
         {
-            i++;
-            j--;
+            swap(a[i], a[j]);
+            i++; 
         }
     }
-    quick_sort(a, l, j);
-    quick_sort(a, i, r);
+    swap(a[i + 1], a[high]);
+    return (i + 1);
+}
+template <class T>
+void quickSort(T* a, int low, int high)
+{
+    if (low < high)
+    {
+        int pi = partition(a, low, high);
+        quickSort(a, low, pi - 1);
+        quickSort(a, pi + 1, high);
+    }
 }
 
 template <class T>//radix sort
-void radix_sort(T* &a, int n)
+void radixSort(T* &a, int n)
 {
     int max = 0, exp = 0;
     for (int i = 0; i < n; i++)
@@ -166,7 +208,7 @@ void radix_sort(T* &a, int n)
 }
 
 template <class T>//sharker sort
-void shaker_sort(T* a, int n) {
+void shakerSort(T* a, int n) {
 	int l = 0, r = n-1, k = n-1;
 	while (l < r)
 	{
@@ -193,7 +235,7 @@ void shaker_sort(T* a, int n) {
 }
 
 template <class T>//shell sort
-void shell_sort(T* a, int n) {
+void shellSort(T* a, int n) {
 	int i, j, k;
 	T temp;
 
@@ -217,7 +259,7 @@ void shell_sort(T* a, int n) {
 }
 
 template <class T>//flash sort
-void flash_sort(T* a, int n)
+void flashSort(T* a, int n)
 {
     int minVal = a[0], max = a[0], hold;
     int m = int(0.45 * n);
@@ -276,102 +318,145 @@ void flash_sort(T* a, int n)
 }
 
 template <class T>
+void countingSort(T* a, int n)
+{
+	int* arr_out = new int[n]; // mảng arr_out[] sẽ chứa phần tử sau khi sort
+	int max = a[0];
+	int min = a[0];
+ 
+	for (int i = 1; i < n; i++)
+	{
+		if (a[i] > max)
+			max = a[i]; // giá trị lớn nhất trong mảng
+		else if (a[i] < min)
+ 
+			min = a[i]; // giá trị nhỏ nhất trong mảng
+	}
+ 
+	int k = max - min + 1; // kích thước mảng đếm
+	int* count_arr = new int[k];  // Tạo một mảng đếm để lưu trữ số lượng của từng giá trị đầu vào
+	fill_n(count_arr, k, 0); //Khởi tạo các phần tử count_array[] bằng 0
+ 
+	for (int i = 0; i < n; i++)
+		count_arr[a[i] - min]++; // lưu số lượng giá trị đầu vào
+ 
+	// thay đổi count_arr[] để count_arr[] hiện tại chứa cái vị trí các giá trị đầu vào của mảng arr_out[]
+ 
+	for (int i = 1; i < k; i++)
+		count_arr[i] += count_arr[i - 1];
+ 
+	// Điền arr_out[] bằng cách sử dụng count_arr[] và a[]
+ 
+	for (int i = 0; i < n; i++)
+	{
+		arr_out[count_arr[a[i] - min] - 1] = a[i];
+		count_arr[a[i] - min]--;
+	}
+ 
+	// Sao chép arr_out[] vào a[], để đầu vào bây giờ chứa các giá trị đã được sắp xếp
+	for (int i = 0; i < n; i++)
+		a[i] = arr_out[i];
+}
+
+
+template <class T>
 double time_sort(T* a, int n, string sort) {
-	// if (sort == "selection-sort"){
-	// 	double cpu_time_used;
-	// 	clock_t start = clock();
-	// 	selection_sort(a, n);
-	// 	clock_t end = clock();
-	// 	cpu_time_used = ((double)(end - start)) / CLOCKS_PER_SEC;
-	// 	return cpu_time_used;
-    // }
+	if (sort == "selection-sort"){
+		double cpu_time_used;
+		clock_t start = clock();
+		selectionSort(a, n);
+		clock_t end = clock();
+		cpu_time_used = ((double)(end - start))*1000 / CLOCKS_PER_SEC;
+		return cpu_time_used;
+    }
     
-	if (sort == "insertion-sort"){
+	else if (sort == "insertion-sort"){
         double cpu_time_used;
 		clock_t start = clock();
-		insertion_sort(a, n);
+		insertionSort(a, n);
 		clock_t end = clock();
-		cpu_time_used = ((double)(end - start)) / CLOCKS_PER_SEC;
+		cpu_time_used = ((double)(end - start))*1000 / CLOCKS_PER_SEC;
 		return cpu_time_used;
     }
 
-    // else if (sort == "buble-sort"){
-    //     double cpu_time_used;
-	// 	clock_t start = clock();
-	// 	buble_sort(a, n);
-	// 	clock_t end = clock();
-	// 	cpu_time_used = ((double)(end - start)) / CLOCKS_PER_SEC;
-	// 	return cpu_time_used;
-    // }
+    else if (sort == "buble-sort"){
+        double cpu_time_used;
+		clock_t start = clock();
+		bubbleSort(a, n);
+		clock_t end = clock();
+		cpu_time_used = ((double)(end - start))*1000 / CLOCKS_PER_SEC;
+		return cpu_time_used;
+    }
     
 	else if (sort == "heap-sort"){
         double cpu_time_used;
 		clock_t start = clock();
-		heap_sort(a, n);
+		heapSort(a, n);
 		clock_t end = clock();
-		cpu_time_used = ((double)(end - start)) / CLOCKS_PER_SEC;
+		cpu_time_used = ((double)(end - start))*1000 / CLOCKS_PER_SEC;
 		return cpu_time_used;
     }
     
 	else if (sort == "merge-sort"){
         double cpu_time_used;
 		clock_t start = clock();
-		merge_sort(a, 0, n-1);
+		mergeSort(a, 0, n-1);
 		clock_t end = clock();
-		cpu_time_used = ((double)(end - start)) / CLOCKS_PER_SEC;
+		cpu_time_used = ((double)(end - start))*1000 / CLOCKS_PER_SEC;
 		return cpu_time_used;
     }
     
 	else if (sort == "quick-sort"){
         double cpu_time_used;
 		clock_t start = clock();
-		quick_sort(a, 0, n-1);
+		quickSort(a, 0, n-1);
 		clock_t end = clock();
-		cpu_time_used = ((double)(end - start)) / CLOCKS_PER_SEC;
+		cpu_time_used = (double)(end - start) / CLOCKS_PER_SEC;
 		return cpu_time_used;
     }
 
     else if (sort == "radix-sort"){
         double cpu_time_used;
 		clock_t start = clock();
-		radix_sort(a, n);
+		radixSort(a, n);
 		clock_t end = clock();
-		cpu_time_used = ((double)(end - start)) / CLOCKS_PER_SEC;
+		cpu_time_used = ((double)(end - start))*1000 / CLOCKS_PER_SEC;
 		return cpu_time_used;
     }
 	
 	else if (sort == "shaker-sort"){
         double cpu_time_used;
 		clock_t start = clock();
-		shaker_sort(a, n);
+		shakerSort(a, n);
 		clock_t end = clock();
-		cpu_time_used = ((double)(end - start)) / CLOCKS_PER_SEC;
+		cpu_time_used = ((double)(end - start))*1000 / CLOCKS_PER_SEC;
 		return cpu_time_used;
     }
     
 	else if (sort == "shell-sort"){
         double cpu_time_used;
 		clock_t start = clock();
-		shell_sort(a, n);
+		shellSort(a, n);
 		clock_t end = clock();
-		cpu_time_used = ((double)(end - start)) / CLOCKS_PER_SEC;
+		cpu_time_used = ((double)(end - start))*1000 / CLOCKS_PER_SEC;
 		return cpu_time_used;
     }
     
-    // else if (sort == "counting-sort"){
-    //     double cpu_time_used;
-	// 	clock_t start = clock();
-	// 	counting_sort(a, n);
-	// 	clock_t end = clock();
-	// 	cpu_time_used = ((double)(end - start)) / CLOCKS_PER_SEC;
-	// 	return cpu_time_used;
-    // }
-    // else if (sort == "flash-sort"){
-    //     double cpu_time_used;
-	// 	clock_t start = clock();
-	// 	flash_sort(a, n);
-	// 	clock_t end = clock();
-	// 	cpu_time_used = ((double)(end - start)) / CLOCKS_PER_SEC;
-	// 	return cpu_time_used;
-    // }
+    else if (sort == "counting-sort"){
+        double cpu_time_used;
+		clock_t start = clock();
+		countingSort(a, n);
+		clock_t end = clock();
+		cpu_time_used = ((double)(end - start))*1000 / CLOCKS_PER_SEC;
+		return cpu_time_used;
+    }
+
+    else if (sort == "flash-sort"){
+        double cpu_time_used;
+		clock_t start = clock();
+		flashSort(a, n);
+		clock_t end = clock();
+		cpu_time_used = ((double)(end - start))*1000 / CLOCKS_PER_SEC;
+		return cpu_time_used;
+    }
 }
