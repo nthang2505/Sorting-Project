@@ -181,7 +181,7 @@ void quickSort_c(T *a, int left, int right,long long& compare)
 
 
 template <class T>
-void radixSort_c(T* &a, int n, long long& compare)
+void radixSort_c(T* a, int n, long long& compare)
 {
     int max = 0, exp = 0;
     for (int i = 0; ++compare && i < n; i++)
