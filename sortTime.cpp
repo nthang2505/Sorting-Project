@@ -174,7 +174,7 @@ void quickSort(T* a, int low, int high)
 }
 
 template <class T>//radix sort
-void radixSort(T* &a, int n)
+void radixSort(T* a, int n)
 {
     int max = 0, exp = 0;
     for (int i = 0; i < n; i++)
