@@ -145,33 +145,38 @@ void mergeSort(T* a, int l, int r) {
     }
 }
 
-template <class T>//quick sort
-int partition (T* a, int low, int high)
-{
-    int pivot = a[(high - low) / 2];
-    int i = low;
- 
-    for (int j = low; j <= high- 1; j++)
-    {
-        if (a[j] <= pivot)
-        {
-            swap(a[i], a[j]);
-            i++; 
-        }
-    }
-    swap(a[i + 1], a[high]);
-    return (i + 1);
-}
 template <class T>
-void quickSort(T* a, int low, int high)
+int partition (T *a, int low, int high)
 {
-    if (low < high)
-    {
-        int pi = partition(a, low, high);
-        quickSort(a, low, pi - 1);
-        quickSort(a, pi + 1, high);
+    int pivot = a[high/2 + low/2];    // pivot
+    int left = low;
+    int right = high;
+    while(true){
+        while(left <= right && a[left] < pivot) 
+            left++; 
+        while(right >= left && a[right] > pivot) 
+            right--;
+        if (left >= right) 
+            break; 
+
+        swap(a[left], a[right]);
+        left++; 
+        right--; 
     }
+    swap(a[left], a[high/2 + low/2]);
+    return left; 
 }
+
+template <class T>
+void quickSort(T *a, int left, int right)
+{
+    if (left >= right)
+        return;
+    int pivot = partition(a, left, right);
+    quickSort(a, left, pivot - 1);
+    quickSort(a, pivot + 1, right);
+}
+
 
 template <class T>//radix sort
 void radixSort(T* &a, int n)
@@ -411,7 +416,7 @@ double time_sort(T* a, int n, string sort) {
 		clock_t start = clock();
 		quickSort(a, 0, n-1);
 		clock_t end = clock();
-		cpu_time_used = (double)(end - start) / CLOCKS_PER_SEC;
+		cpu_time_used = ((double)(end - start))*1000 / CLOCKS_PER_SEC;
 		return cpu_time_used;
     }
 

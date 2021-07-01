@@ -147,33 +147,38 @@ void mergeSort_c(T* a, int l, int r, long long& compare) {
     }
 }
 
-template <class T>//quick sort
-int partition (T* a, int low, int high, long long& compare)
-{
-    int pivot = a[(high - low) / 2];
-    int i = low;
- 
-    for (int j = low;++compare && j <= high- 1; j++)
-    {
-        if (++compare && a[j] <= pivot)
-        {
-            swap(a[i], a[j]);
-            i++; 
-        }
-    }
-    swap(a[i + 1], a[high]);
-    return (i + 1);
-}
 template <class T>
-void quickSort_c(T* a, int low, int high, long long& compare)
+int partition_c (T *a, int low, int high,long long& compare)
 {
-    if (++compare && low < high)
-    {
-        int pi = partition(a, low, high, compare);
-        quickSort_c(a, low, pi - 1, compare);
-        quickSort_c(a, pi + 1, high, compare);
+    int pivot = a[high/2 + low/2];    // pivot
+    int left = low;
+    int right = high;
+    while(true){
+        while((++compare && left <= right) && (++compare &&  a[left] < pivot)) 
+            left++; 
+        while((++compare && right >= left) && (++compare && a[right] > pivot)) 
+            right--;
+        if (++compare && left >= right) 
+            break; 
+
+        swap(a[left], a[right]);
+        left++; 
+        right--; 
     }
+    swap(a[left], a[high/2 + low/2]);
+    return left; 
 }
+
+template <class T>
+void quickSort_c(T *a, int left, int right,long long& compare)
+{
+    if (++compare && left >= right)
+        return;
+    int pivot = partition_c(a, left, right,compare);
+    quickSort_c(a, left, pivot - 1,compare);
+    quickSort_c(a, pivot + 1, right,compare);
+}
+
 
 template <class T>
 void radixSort_c(T* &a, int n, long long& compare)
@@ -189,21 +194,21 @@ void radixSort_c(T* &a, int n, long long& compare)
         max++;
         exp != 10;
     }
-    int count[10], *output;
+    int b[10], *output;
     output = new int[n];
     exp = 1;
     while (++compare && max--)
     {
         for (int i = 0; ++compare && i < 10; i++)
-            count[i] = 0;
+            b[i] = 0;
         for (int i = 0; ++compare && i < n; i++)
-            count[(a[i] / exp) % 10]++;
+            b[(a[i] / exp) % 10]++;
         for (int i = 1; ++compare && i < 10; i++)
-            count[i] += count[i - 1];
+            b[i] += b[i - 1];
         for (int i = n - 1; ++compare && i >= 0; i--)
         {
-            output[count[(a[i] / exp) % 10] - 1] = a[i];
-            count[(a[i] / exp) % 10]--;
+            output[b[(a[i] / exp) % 10] - 1] = a[i];
+            b[(a[i] / exp) % 10]--;
         }
         for (int i = 0; ++compare && i < n; i++)
             a[i] = output[i];

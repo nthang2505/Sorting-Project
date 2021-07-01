@@ -83,15 +83,13 @@ int main(int argc, char* argv[])
 
                 string a[4] = {"Randomize", "Sorted", "Reversed", "Nearly Sorted"};
                 int i = 0;
-                int* a1;
-                int* a2;
                 int n = stoi(array[3]);
                 while (i != 4)
                 {
                     cout << "Input order: " << a[i] << endl;
                     cout << "--------------------" << endl;
-                    a1 = new int[n];
-                    a2 = new int[n];
+                    int* a1 = new int[n];
+                    int* a2 = new int[n];
                     GenerateData(a1, n, i);
                     GenerateData(a2, n, i);
                     
