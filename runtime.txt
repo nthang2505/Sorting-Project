@@ -60,33 +60,33 @@ insertion-sort :
 ...............................
 bubble-sort :
     rand :
-        10k :nan
-        30k :nan
-        50k :nan
-        100k :nan
-        300k :nan
-        500k :nan
+        10k :235
+        30k :2468
+        50k :6876
+        100k :31934
+        300k :320120
+        500k :912084
     sorted :
-        10k :nan
-        30k :nan
-        50k :nan
-        100k :nan
-        300k :nan
-        500k :nan
+        10k :119
+        30k :1116
+        50k :5613
+        100k :12127
+        300k :124590
+        500k :402162
     reverse :
-        10k :nan
-        30k :nan
-        50k :nan
-        100k :nan
-        300k :nan
-        500k :nan
+        10k :199
+        30k :4586
+        50k :7526
+        100k :33829
+        300k :258739
+        500k :706556
     nearlysort :
-        10k :nan
-        30k :nan
-        50k :nan
-        100k :nan
-        300k :nan
-        500k :nan
+        10k :125
+        30k :1086
+        50k :5613
+        100k :11812
+        300k :136752
+        500k :402982
 ...............................
 shaker-sort :
     rand :

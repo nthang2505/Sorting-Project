@@ -384,7 +384,7 @@ double time_sort(T* a, int n, string sort) {
 		return cpu_time_used;
     }
 
-    else if (sort == "buble-sort"){
+    else if (sort == "bubble-sort"){
         double cpu_time_used;
 		clock_t start = clock();
 		bubbleSort(a, n);
